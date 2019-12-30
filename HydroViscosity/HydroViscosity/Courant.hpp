@@ -25,6 +25,12 @@ public:
 	\return The calculated time step
 	*/
 	double operator()(std::vector<double> const& edges, std::vector<double> const& pressure, std::vector<double> const& density, double gamma) const;
+	/*! \brief Calculates the time step
+	\param edges The location of the interfaces
+	\param cs The sound speed inside the computational domain
+	\return The calculated time step
+	*/
+	double operator()(std::vector<double> const& edges, std::vector<double> const& cs) const;
 };
 
 #endif // COURANT_HPP

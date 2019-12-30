@@ -15,3 +15,12 @@ double Courant::operator()(std::vector<double> const& edges, std::vector<double>
 	}
 	return cfl_ / dt_inv;
 }
+
+double Courant::operator()(std::vector<double> const& edges, std::vector<double> const& cs) const
+{
+	double dt_inv = 0.0;
+	size_t N = cs.size();
+	for (size_t i = 0; i < N; ++i)
+		dt_inv = std::max(dt_inv, cs[i] / (edges[i + 1] - edges[i]));
+	return cfl_ / dt_inv;
+}
