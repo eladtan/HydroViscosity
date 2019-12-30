@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <string>
 
 /*! \brief Calculates elementwise addition of two vectors using +=
 \param lhs The vector that should be chagned
@@ -124,4 +125,10 @@ std::vector<T> operator/ (const std::vector<T>& lhs, const std::vector<T>& rhs)
 	return res;
 }
 
+/*! \brief Writes a list of numbers to a file
+\param v List of numbers
+\param fname Name of the file
+\param prec Precision
+*/
+void write_vector(std::vector<double> const& v, std::string const& fname, size_t prec = 6);
 #endif // UTILS_HPP

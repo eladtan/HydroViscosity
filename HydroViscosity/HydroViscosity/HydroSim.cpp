@@ -126,8 +126,14 @@ void HydroSim::TimeAdvanceViscosity()
 	time_ += dt;
 }
 
-void HydroSim::Output() const
+void HydroSim::Output(std::string const& prefix, std::string const& suffix) const
 {
+	write_vector(density_, prefix + "density" + suffix + ".txt");
+	write_vector(velocity_, prefix + "velocity" + suffix + ".txt");
+	write_vector(pressure_, prefix + "pressure" + suffix + ".txt");
+	write_vector(edges_, prefix + "x" + suffix + ".txt");
+	std::vector<double> temp(1, time_);
+	write_vector(temp, prefix + "time" + suffix + ".txt");
 }
 
 double HydroSim::GetTime() const

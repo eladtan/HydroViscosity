@@ -8,6 +8,7 @@
 #include "Courant.hpp"
 #include "Geometry.hpp"
 #include "Boundary.hpp"
+#include <string>
 
 //! Class for running a 1D hydro simulation
 class HydroSim
@@ -40,8 +41,11 @@ public:
 		Boundary const& right);
 	//! \brief Advances the simulation a single time step
 	void TimeAdvanceViscosity();
-	//! \brief Outputs the simulation data into ascii files
-	void Output()const;
+	/*! \brief Outputs the simulation data into ascii files
+	\param prefix The prefix to add to all output files
+	\param suffix The suffix to add to all output files
+	*/
+	void Output(std::string const& prefix, std::string const& suffix)const;
 	/*!
 	\brief Returns the time of the simulation
 	\return The time of the simulation
