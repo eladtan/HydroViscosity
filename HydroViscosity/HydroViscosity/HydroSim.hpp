@@ -9,21 +9,22 @@
 #include "Geometry.hpp"
 #include "Boundary.hpp"
 #include <string>
+#include "Hllc.hpp"
 
 //! Class for running a 1D hydro simulation
 class HydroSim
 {
 private:
 	Courant const& courant_;
-	double gamma_;
+	const double gamma_;
 	Geometry const& geo_;
 	Boundary const& boundary_left_; 
 	Boundary const& boundary_right_;
 	double time_;
 	size_t cycle_;
-	double viscosity_sigma_;
+	const double viscosity_sigma_;
 	std::vector<double> edges_, mass_, density_, velocity_, pressure_, energy_, acc_, volume_, viscosity_;
-
+	const Hllc hllc_;
 public:
 	/*! \brief Class constructor
 	\param edges The initial location of the interfaces
@@ -39,7 +40,7 @@ public:
 	HydroSim(std::vector<double> const& edges, std::vector<double> const& density, std::vector<double> const& pressure, std::vector<double> const& velocity, 
 		Courant const& courant, double gamma, Geometry const& geo, Boundary const& left,
 		Boundary const& right);
-	//! \brief Advances the simulation a single time step
+	//! \brief Advances the simulation a single time step using artifical viscosity
 	void TimeAdvanceViscosity();
 	/*! \brief Outputs the simulation data into ascii files
 	\param prefix The prefix to add to all output files
