@@ -125,6 +125,7 @@
 \end_inset
 
  זה האנרגיה הפנימית של החומר ליחידת מסה.
+ על מנת לפתור את משוואות אלו צריך יחס סגירה שנתון על ידי משוואת מצב
 \end_layout
 
 \begin_layout Standard
@@ -174,6 +175,141 @@
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+אחד מהקשיים בפתרון משוואות אלות הוא היווצרות גלי הלם שהם אי רציפות בפתרון
+ דבר שמשבש את הגדרת הנגזרות המרחביות
+\end_layout
+
+\begin_layout Section
+סכמת
+\family roman
+\series bold
+\shape up
+\size larger
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+Richtmyer Von-Neumann
+\end_layout
+
+\begin_layout Standard
+בסכמה זאת מוסיפים צמיגות מלאכותית היכן שיש הלמים ועל ידי כך אפקטיבית מוסיפים
+ איבר דיפוזיה שמורח את ההלם.
+ נגדיר את הלחץ, אנרגיה פנימית ומסה להיות מוגדרים במרכז תא ואת המהירות והתאוצה
+ להיות מוגדרים על דפנות התאים.
+\end_layout
+
+\begin_layout Standard
+נגדיר את איבר צמיגות המלאכותית להיות
+\begin_inset Formula 
+\begin{align*}
+q_{i-1/2} & =\begin{cases}
+\sigma(v_{i-1}-v_{i})^{2} & if\quad u_{i}<u_{i-1}\\
+0 & if\quad u_{i}>u_{i-1}
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+בפועל המשוואות שפותרים בסכמה זאת בצורה לאגרנז
+\lang english
+'
+\lang hebrew
+ית בסדר שני הן
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+v_{i}^{n+1/2} & = & v_{i}^{n}+\frac{\Delta t}{2}a_{i}^{n}\\
+x_{i}^{n+1} & = & x_{i}^{n}+v_{i}^{n+1/2}\Delta t\\
+V_{i-1/2}^{n+1} & = & x_{i}^{n+1}-x_{i-1}^{n+1}\\
+e_{i-1/2}^{n+1} & = & e_{i-1/2}^{n}-\frac{1}{2}\frac{(P_{i-1/2}^{n+1}+P_{i-1/2}^{n}+q_{i-1/2}^{n+1}+q_{i-1/2}^{n})(V_{i-1/2}^{n+1}-V_{i-1/2}^{n})}{m_{i-1/2}}\\
+a_{i}^{n+1} & = & -\frac{2(P_{i+1/2}^{n+1}+q_{i+1/2}^{n+1}-P_{i-1/2}^{n+1}-q_{i-1/2}^{n+1})}{m_{i-1/2}+m_{i+1/2}}\\
+v_{i}^{n+1} & = & v_{i}^{n+1/2}+\frac{\Delta t}{2}a_{i}^{n}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+הבעיה היא שמשוואת קידום האנרגיה הפנימית היא סתומה כי הלחץ החדש תלוי באנרגיה.
+ עבור גז אידאלי יש יחס פשוט בין המשתנים 
+\begin_inset Formula $P=\rho e(\gamma-1)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ הוא המקדם האדיאבטי של הגז.
+ נרשום מחדש את משוואת האנרגיה להיות
+\begin_inset Formula 
+\[
+e_{i-1/2}^{n+1}=\frac{e_{i-1/2}^{n}-\frac{1}{2}\frac{(P_{i-1/2}^{n}+q_{i-1/2}^{n+1}+q_{i-1/2}^{n})(V_{i-1/2}^{n+1}-V_{i-1/2}^{n})}{m_{i-1/2}}}{1+\frac{1}{2}(\gamma-1)\rho_{i-1/2}^{n+1}(V_{i-1/2}^{n+1}-V_{i-1/2}^{n})/m_{i-1/2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+סכמת
+\family roman
+\series bold
+\shape up
+\size larger
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+Godunov
 \end_layout
 
 \begin_layout Section
