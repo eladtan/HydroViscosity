@@ -73,7 +73,7 @@ namespace
 		size_t N = density.size();
 		cs.resize(N);
 		for (size_t i = 0; i < N; ++i)
-			cs[i] = std::sqrt(gamma * pressure[i + 1] / density[i]);
+			cs[i] = std::sqrt(gamma * pressure[i] / density[i]);
 	}
 
 	double dp2csingle(double density, double pressure, double gamma)
