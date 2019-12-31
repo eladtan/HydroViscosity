@@ -102,8 +102,8 @@ namespace
 		size_t N = momentum.size() - 2;
 		for (size_t i = 0; i < N; ++i)
 		{
-			momentum[i + 1] += dt * (pstar[i + 1] * areas[i + 2] - pstar[i] * areas[i + 1]);
-			energy[i + 1] += dt * (pstar[i + 1] * areas[i + 2] * ustar[i + 1] - pstar[i] * areas[i + 1] * ustar[i]);
+			momentum[i + 1] -= dt * (pstar[i + 1] * areas[i + 2] - pstar[i] * areas[i + 1]);
+			energy[i + 1] -= dt * (pstar[i + 1] * areas[i + 2] * ustar[i + 1] - pstar[i] * areas[i + 1] * ustar[i]);
 		}
 		// Deal with boundaries
 		momentum[0] += dt * (pstar[0] * areas[1] - pstarl * areas[0]);
