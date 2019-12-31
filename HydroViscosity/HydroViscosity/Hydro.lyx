@@ -1,0 +1,745 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "David"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+משוואות אוילר
+\end_layout
+
+\begin_layout Standard
+משוואות אוילר הן משוואות המתארות שימור מסה, תנע ואנרגיה בנוזלים וגזים אידאלים.
+ ניתן לכתוב אותם בצורה משמרת )בחד מימד( בתור 
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{\partial\rho}{\partial t} & + & \frac{\partial(\rho v)}{\partial x}=0\\
+\frac{\partial(\rho v)}{\partial t} & + & \frac{\partial(P+\rho v^{2})}{\partial x}=0\\
+\frac{\partial E}{\partial t} & + & \frac{\partial((E+P)v)}{\partial x}=0
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $\rho$
+\end_inset
+
+ זה צפיפות החומר, 
+\begin_inset Formula $v$
+\end_inset
+
+ זה מהירות החומר, 
+\begin_inset Formula $P$
+\end_inset
+
+ זה הלחץ, 
+\begin_inset Formula $E$
+\end_inset
+
+ זה האנרגיה הכוללת 
+\begin_inset Formula $E=\frac{1}{2}\rho v^{2}+\rho e$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $e$
+\end_inset
+
+ זה האנרגיה הפנימית של החומר ליחידת מסה.
+\end_layout
+
+\begin_layout Standard
+באופן כללי רושמים סט של משוואות אלו בצורה וקטורית 
+\begin_inset Formula 
+\[
+\frac{\partial\boldsymbol{U}}{\partial t}+\frac{\partial\boldsymbol{F}}{\partial x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+את משוואות אוילר ניתן גם לכתוב בצורה אחרת, בתור נגזרות בזמן על המשתנים ההידרודינ
+מים
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{\partial\rho}{\partial t} & = & -\frac{\partial(\rho v)}{\partial x}\\
+\frac{\partial v}{\partial t} & = & -v\frac{\partial v}{\partial x}-\frac{\partial P}{\rho\partial x}\\
+\frac{\partial e}{\partial t} & = & -v\frac{\partial e}{\partial x}-\frac{P}{\rho}\frac{\partial v}{\partial x}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+אפשר גם לרשום את המשוואות האלו בצורה לגארנזי'ת ע
+\begin_inset Quotes erd
+\end_inset
+
+י השינוי 
+\begin_inset Formula $\frac{d}{dt}=\frac{\partial}{\partial t}+v\frac{\partial}{\partial x}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{d\rho}{dt} & = & -\rho\frac{\partial v}{\partial x}\\
+\frac{dv}{dt} & = & -\frac{1}{\rho}\frac{\partial P}{\partial x}\\
+\frac{de}{dt} & = & -\frac{P}{\rho}\frac{\partial v}{\partial x}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\noindent
+פותרן רימן מסוג
+\family roman
+\series bold
+\shape up
+\size larger
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+HLLC
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $\boldsymbol{U}$
+\end_inset
+
+ הוא וקטור שמייצג את שלושת הגדלים השמורים ו
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ הוא וקטור שמייצג את שלושת השטפים.
+ בעיית רימן מייצגת בעיה שבה יש מחיצה בין שני מצבים אינסופיים מרחבית.
+ ברגע 
+\begin_inset Formula $t=0$
+\end_inset
+
+ מעלימים את המחיצה ומקבלים פתרון שהוא
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+self similar
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+בקוארדינטה 
+\begin_inset Formula $x/t$
+\end_inset
+
+.
+ אם נסתכל נניח שמהירות הגל הכי מהיר שנע שמאלה הוא 
+\begin_inset Formula $S_{L}$
+\end_inset
+
+ ושמהירות הגל שנע ימינה הכי מהר הוא 
+\lang english
+
+\begin_inset Formula $S_{R}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+אז אם נעשה אינטגרציה זמנית מזמן 
+\begin_inset Formula $t=0$
+\end_inset
+
+ עד זמן 
+\begin_inset Formula $t=T$
+\end_inset
+
+ ומרחבית מ
+\begin_inset Formula $x_{L}\leq S_{L}T$
+\end_inset
+
+ עד 
+\begin_inset Formula $x_{R}\geq S_{R}T$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{L}}^{x_{R}}\boldsymbol{U}(x,T)dx=\int_{x_{L}}^{x_{R}}\boldsymbol{U}(x,0)dx+\int_{0}^{T}\boldsymbol{F}(\boldsymbol{U}(x_{L},t))dt-\int_{0}^{T}\boldsymbol{F}(\boldsymbol{U}(x_{R},t))dt
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+זה ניתן לפישוט )נזכור שהתנאים קבועים וידועים בגבולות האינטגרציה( 
+\begin_inset Formula 
+\begin{equation}
+\int_{x_{L}}^{x_{R}}\boldsymbol{U}(x,T)dx=x_{R}\boldsymbol{U}_{R}-x_{L}\boldsymbol{U}_{L}+T(\boldsymbol{F}_{L}-\boldsymbol{F}_{R})\label{eq:consistency}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+את אגף שמאל נפצל
+\begin_inset Formula 
+\begin{multline}
+\int_{x_{L}}^{x_{R}}\boldsymbol{U}(x,T)dx=\int_{x_{L}}^{TS_{L}}\boldsymbol{U}(x,T)dx+\int_{TS_{L}}^{TS_{R}}\boldsymbol{U}(x,T)dx+\int_{TS_{R}}^{x_{R}}\boldsymbol{U}(x,T)dx=\\
+\int_{TS_{L}}^{TS_{R}}\boldsymbol{U}(x,T)dx+(TS_{L}-x_{L})\boldsymbol{U}_{L}+(x_{R}-TS_{R})\boldsymbol{U}_{R}\label{eq:left_side}
+\end{multline}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+אם נשוואה את משוואות 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:consistency"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ ואת 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:left_side"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ נקבל אחרי קצת אלגברה
+\begin_inset Formula 
+\begin{multline*}
+\frac{1}{T(S_{R}-S_{L})}\int_{TS_{L}}^{TS_{R}}\boldsymbol{U}(x,T)dx=\frac{S_{R}\boldsymbol{U}_{R}-S_{L}\boldsymbol{U}_{L}+\boldsymbol{F}_{L}-\boldsymbol{F}_{R}}{S_{R}-S_{L}}
+\end{multline*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+פותרן
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+HLLC
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+מניח שמבנה הגלים שתחום בין המהירות השמאלית ובין המירות הימנית ניתן לחלק
+ לשני מצבים שונים שמופרדים ע
+\begin_inset Quotes erd
+\end_inset
+
+י אי רציפות מגע 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename pasted1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+אי רציפות המגע נעה במהירות 
+\begin_inset Formula $S_{*}$
+\end_inset
+
+ ובין שני הצדדים יש שיוויון לחצים ונגדיר את מצבי הבניים להיות
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{U}_{*L} & = & \frac{1}{T(S_{R}-S_{L})}\int_{TS_{L}}^{TS_{*}}\boldsymbol{U}(x,T)dx\\
+\boldsymbol{U}_{*R} & = & \frac{1}{T(S_{R}-S_{L})}\int_{TS_{*}}^{TS_{R}}\boldsymbol{U}(x,T)dx
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+שימור הגדלים הנשמרים )תנאי
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+Rankine ̄Huganoit
+\lang hebrew
+(
+\begin_inset Formula 
+\begin{eqnarray}
+\boldsymbol{F}_{*L} & = & F_{L}+S_{L}(\boldsymbol{U}_{*L}-\boldsymbol{U}_{L})\nonumber \\
+\boldsymbol{F}_{*R} & = & F_{R}+S_{R}(\boldsymbol{U}_{*R}-\boldsymbol{U}_{R})\label{eq:fluxes}\\
+\boldsymbol{F}_{*R} & = & F_{*L}+S_{*}(\boldsymbol{U}_{*R}-\boldsymbol{U}_{*L})\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+משוואות 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fluxes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ הן סט של
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+9
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+משוואות עם
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+12
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+נעלמים, כדי לקבל פתרון נניח בנוסף שמתקיים 
+\begin_inset Formula $S_{*}=v_{*L}=v_{*R}$
+\end_inset
+
+ )עוד שני תנאים( ובנוסף שמתקיים 
+\begin_inset Formula $P_{*L}=P_{*R}$
+\end_inset
+
+.
+ ממשוואות שימור המסה והתנע נקבל )תחת ההנחה 
+\begin_inset Formula $\boldsymbol{F}_{*}=\begin{pmatrix}\rho_{*}S_{*}\\
+P_{*}+\rho_{*}S_{*}^{2}
+\end{pmatrix}$
+\end_inset
+
+(, שתי משוואות אלו עבור צד שמאל וימין יתנו לנו
+\begin_inset Formula 
+\begin{eqnarray*}
+S_{*} & = & \frac{P_{R}-P_{L}+\rho_{L}v_{L}(S_{L}-V_{L})-\rho_{R}v_{R}(S_{R}-v_{R})}{\rho_{L}(S_{L}-v_{L})-\rho_{R}(S_{R}-v_{R})}\\
+P_{*} & = & P_{L}+\rho_{L}(S_{L}-v_{L})(S_{*}-v_{L})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+השטפים ניתנים ע
+\begin_inset Quotes erd
+\end_inset
+
+י 
+\begin_inset Formula 
+\[
+\boldsymbol{F}^{hllc}=\begin{cases}
+\boldsymbol{F}_{L} & if\quad0\leq S_{L}\\
+\boldsymbol{F}_{*L}=\boldsymbol{F}_{L}+S_{L}(\boldsymbol{U}_{*L}-\boldsymbol{U}_{L}) & if\quad S_{L}\leq0\leq S_{*}\\
+\boldsymbol{F}_{*R}=\boldsymbol{F}_{R}+S_{R}(\boldsymbol{U}_{*R}-\boldsymbol{U}_{R}) & if\quad S_{*}\leq0\leq S_{R}\\
+\boldsymbol{F}_{R} & if\quad0\geq S_{R}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+והגדלים השמורים ע
+\begin_inset Quotes erd
+\end_inset
+
+י
+\begin_inset Formula 
+\[
+\boldsymbol{U}_{*L,R}=\rho_{L,R}\frac{S_{L,R}-v_{L,R}}{S_{L,R}-S_{*}}\begin{pmatrix}1\\
+S_{*}\\
+\frac{E_{L,R}}{\rho_{L,R}}+(S_{*}-v_{L,R})(S_{*}+\frac{P_{L,R}}{\rho_{L,R}(S_{L,R}-v_{L,R})})
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+את מהירות הגלים הנעים שמאלה וימינה נקרב על ידי 
+\begin_inset Formula 
+\[
+S_{L}=\textrm{min}(v_{L}-c_{L},v_{R}-c_{R}),\quad S_{R}=\textrm{max}(v_{L}+c_{L},v_{R}+c_{R})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $c$
+\end_inset
+
+ היא מהירות הקול.
+\end_layout
+
+\end_body
+\end_document
