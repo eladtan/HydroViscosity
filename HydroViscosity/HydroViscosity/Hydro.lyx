@@ -141,6 +141,19 @@
 \end_layout
 
 \begin_layout Standard
+כאשר 
+\begin_inset Formula $\boldsymbol{U}$
+\end_inset
+
+ הוא וקטור שמייצג את שלושת הגדלים השמורים ו
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ הוא וקטור שמייצג את שלושת השטפים.
+ 
+\end_layout
+
+\begin_layout Standard
 את משוואות אוילר ניתן גם לכתוב בצורה אחרת, בתור נגזרות בזמן על המשתנים ההידרודינ
 מים
 \begin_inset Formula 
@@ -249,6 +262,7 @@ q_{i-1/2} & =\begin{cases}
 v_{i}^{n+1/2} & = & v_{i}^{n}+\frac{\Delta t}{2}a_{i}^{n}\\
 x_{i}^{n+1} & = & x_{i}^{n}+v_{i}^{n+1/2}\Delta t\\
 V_{i-1/2}^{n+1} & = & x_{i}^{n+1}-x_{i-1}^{n+1}\\
+\rho_{i-1/2}^{n+1} & = & m_{i-1/2}/V_{i-1/2}^{n+1}\\
 e_{i-1/2}^{n+1} & = & e_{i-1/2}^{n}-\frac{1}{2}\frac{(P_{i-1/2}^{n+1}+P_{i-1/2}^{n}+q_{i-1/2}^{n+1}+q_{i-1/2}^{n})(V_{i-1/2}^{n+1}-V_{i-1/2}^{n})}{m_{i-1/2}}\\
 a_{i}^{n+1} & = & -\frac{2(P_{i+1/2}^{n+1}+q_{i+1/2}^{n+1}-P_{i-1/2}^{n+1}-q_{i-1/2}^{n+1})}{m_{i-1/2}+m_{i+1/2}}\\
 v_{i}^{n+1} & = & v_{i}^{n+1/2}+\frac{\Delta t}{2}a_{i}^{n}
@@ -312,6 +326,39 @@ e_{i-1/2}^{n+1}=\frac{e_{i-1/2}^{n}-\frac{1}{2}\frac{(P_{i-1/2}^{n}+q_{i-1/2}^{n
 Godunov
 \end_layout
 
+\begin_layout Standard
+בסכמה זאת פותרים את משוואות אוילר על ידי הגדרת גדלים שהם ממוצע לפי נפח והעברת
+ שטפים בין תאים )סכמה משמרת(.
+ סדר ראשון לגראנז'י יתואר על ידי
+\begin_inset Formula 
+\begin{eqnarray*}
+M_{i-1/2}^{n+1} & = & M_{i-1/2}^{n}+(P_{*,i-1}^{n}-P_{*,i}^{n})\Delta t\\
+E_{i-1/2}^{n+1} & = & E_{i-1/2}^{n}+(P_{*,i-1}^{n}U_{*,i-1}^{n}-P_{*,i}^{n}U_{*,i}^{n})\Delta t\\
+x_{i}^{n+1} & = & x_{i}^{n}+U_{*,i}^{n}\Delta t\\
+V_{i-1/2}^{n+1} & = & x_{i}^{n+1}-x_{i-1}^{n+1}\\
+\rho_{i-1/2}^{n+1} & = & m_{i-1/2}/V_{i-1/2}^{n+1}\\
+v_{i-1/2}^{n+1} & = & M_{i-1/2}^{n+1}/m_{i-1/2}\\
+e_{i-1/2}^{n+1} & = & E_{i-1/2}^{n+1}/m_{i-1/2}-\frac{1}{2}(v_{i-1/2}^{n+1})^{2}\\
+P_{i-1/2}^{n+1} & = & P(\rho_{i-1/2}^{n+1},e_{i-1/2}^{n+1})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $U_{*}$
+\end_inset
+
+ו-
+\begin_inset Formula $P_{*}$
+\end_inset
+
+מתקבלים על ידי הפתרון של בעיית רימן על הדופן שבין תאים
+\end_layout
+
 \begin_layout Section
 \noindent
 פותרן רימן מסוג
@@ -345,16 +392,7 @@ HLLC
 \end_layout
 
 \begin_layout Standard
-כאשר 
-\begin_inset Formula $\boldsymbol{U}$
-\end_inset
-
- הוא וקטור שמייצג את שלושת הגדלים השמורים ו
-\begin_inset Formula $\boldsymbol{F}$
-\end_inset
-
- הוא וקטור שמייצג את שלושת השטפים.
- בעיית רימן מייצגת בעיה שבה יש מחיצה בין שני מצבים אינסופיים מרחבית.
+בעיית רימן מייצגת בעיה שבה יש מחיצה בין שני מצבים אינסופיים מרחבית.
  ברגע 
 \begin_inset Formula $t=0$
 \end_inset
@@ -818,7 +856,7 @@ P_{*} & = & P_{L}+\rho_{L}(S_{L}-v_{L})(S_{*}-v_{L})
 \end_layout
 
 \begin_layout Standard
-השטפים ניתנים ע
+השטפים )ניתנים פה רק עבור שלמות, משתמשים בהם רק בסכמה אולרית( ניתנים ע
 \begin_inset Quotes erd
 \end_inset
 
