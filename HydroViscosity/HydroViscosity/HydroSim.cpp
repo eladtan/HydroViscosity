@@ -113,7 +113,7 @@ HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& 
 		
 	// Calculate initial acceleration
 	acc_.resize(N + 1);
-	CalcAcceleration(pressure_, viscosity_, mass_, acc_);
+	CalcAcceleration(pressure_, viscosity_, mass_, acc_, boundary_left_, boundary_right_);
 
 	// Calculate initial volume
 	GetAllVolumes(geo_, edges_, volume_);
