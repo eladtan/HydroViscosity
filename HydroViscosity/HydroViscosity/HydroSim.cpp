@@ -13,6 +13,14 @@ namespace
 			res[i] = geo.CalcVolume(edges, i);
 	}
 
+	void GetAllAreas(Geometry const& geo, std::vector<double> const& edges, std::vector<double>& res)
+	{
+		size_t N = edges.size();
+		res.resize(N);
+		for (size_t i = 0; i < N; ++i)
+			res[i] = geo.CalcArea(edges, i);
+	}
+
 	void CalcDensity(std::vector<double> const& mass, std::vector<double> const& volumes, std::vector<double>& density)
 	{
 		size_t N = density.size();
@@ -87,6 +95,31 @@ namespace
 		hllc.CalcPstarUstarSingle(dl, pl, vl, csl, density[0], pressure[0], velocity[0], cs[0], ustarl, pstarl);
 		hllc.CalcPstarUstarSingle(density.back(), pressure.back(), velocity.back(), cs.back(), dr, pr, vr, csr, ustarr, pstarr);
 	}
+
+	void UpdateExtensive(std::vector<double>& momentum, std::vector<double>& energy, std::vector<double> const& pstar, std::vector<double> const& ustar,
+		std::vector<double> const& areas, double pstarl, double pstarr, double ustarl, double ustarr, double dt)
+	{
+		size_t N = momentum.size() - 2;
+		for (size_t i = 0; i < N; ++i)
+		{
+			momentum[i + 1] += dt * (pstar[i + 1] * areas[i + 2] - pstar[i] * areas[i + 1]);
+			energy[i + 1] += dt * (pstar[i + 1] * areas[i + 2] * ustar[i + 1] - pstar[i] * areas[i + 1] * ustar[i]);
+		}
+		// Deal with boundaries
+		momentum[0] += dt * (pstar[0] * areas[1] - pstarl * areas[0]);
+		momentum.back() += dt * (pstarr * areas.back()  - pstar.back() * areas[N + 1]);
+		energy[0] += dt * (pstar[0] * areas[1] * ustar[0] - pstarl * areas[0] * ustarl);
+		energy.back() += dt * (pstarr * areas.back() * ustarr - pstar.back() * areas[N + 1] * ustar.back());
+	}
+
+	void UpdateMesh(std::vector<double>& edges, std::vector<double> const& ustar, double ul, double ur, double dt)
+	{
+		size_t N = edges.size() - 1;
+		for (size_t i = 1; i < N; ++i)
+			edges[i] += ustar[i - 1] * dt;
+		edges[0] += ul * dt;
+		edges.back() += ur * dt;
+	}
 }
 
 HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& density, std::vector<double> const& pressure, std::vector<double> const& velocity,
@@ -152,6 +185,7 @@ void HydroSim::TimeAdvanceViscosity()
 
 void HydroSim::TimeAdvanceGodunov()
 {
+	std::vector<double> momentum = velocity_ * mass_;
 	// Calculate the sound speed
 	std::vector<double> cs;
 	dp2c(density_, pressure_, gamma_, cs);
@@ -161,12 +195,19 @@ void HydroSim::TimeAdvanceGodunov()
 	std::vector<double> Pstar, Ustar;
 	hllc_.CalcPstarUstar(density_, pressure_, velocity_, cs, Pstar, Ustar);
 	// Solve the reimann problem for the boundaries
-
+	double pstarl, pstarr, ustarl, ustarr;
+	BoundaryRiemannSolve(boundary_left_, boundary_right_, density_, pressure_, velocity_, cs, gamma_, hllc_, pstarl, pstarr, ustarl, ustarr);
 	// Update extensives
-
+	std::vector<double> areas;
+	GetAllAreas(geo_, edges_, areas);
+	UpdateExtensive(momentum, energy_, Pstar, Ustar, areas, pstarl, pstarr, ustarl, ustarr, dt);
 	// Move grid
-
+	UpdateMesh(edges_, Ustar, ustarl, ustarr, dt);
 	// Update primitives
+	GetAllVolumes(geo_, edges_, volume_);
+	density_ = mass_ / volume_;
+	velocity_ = momentum / mass_;
+	de2p(density_, energy_ / mass_ - 0.5 * velocity_ * velocity_, gamma_, pressure_);
 
 	++cycle_;
 	time_ += dt;
