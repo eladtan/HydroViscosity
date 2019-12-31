@@ -138,7 +138,10 @@ HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& 
 	for (size_t i = 0; i < N; ++i)
 	{
 		mass_[i] = geo_.CalcVolume(edges_, i) * density[i];
-		energy_[i] = pressure_[i] / ((gamma_ - 1.0) * density[i]);
+		if (godunov_)
+			energy_[i] = geo_.CalcVolume(edges_, i) * pressure_[i] / (gamma_ - 1.0) + 0.5 * mass_[i] * velocity_[i] * velocity_[i];
+		else
+			energy_[i] = pressure_[i] / ((gamma_ - 1.0) * density[i]);
 	}
 	// Calc artificial viscosity
 	viscosity_.resize(N);
