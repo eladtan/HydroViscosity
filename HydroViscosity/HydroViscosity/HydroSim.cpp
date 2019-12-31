@@ -93,7 +93,7 @@ HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& 
 	Courant const& courant, double gamma, Geometry const& geo,Boundary const& left,
 	Boundary const& right, bool godunov) : edges_(edges), density_(density), velocity_(velocity), pressure_(pressure), courant_(courant), gamma_(gamma),
 	geo_(geo), boundary_left_(left), boundary_right_(right), godunov_(godunov), time_(0.0), cycle_(0), viscosity_sigma_(2.0), mass_(std::vector<double>()), 
-	viscosity_(std::vector<double>()), volume_(std::vector<double>()), energy_(std::vector<double>())
+	viscosity_(std::vector<double>()), volume_(std::vector<double>()), energy_(std::vector<double>()), hllc_(Hllc())
 {
 	assert(edges_.size() > 1);
 	size_t N = edges_.size() - 1;
