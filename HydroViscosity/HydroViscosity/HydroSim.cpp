@@ -1,6 +1,7 @@
 #include "HydroSim.hpp"
 #include "utils.hpp"
 #include <cassert>
+#include <cmath>
 
 namespace
 {
@@ -53,6 +54,15 @@ namespace
 		size_t N = density.size();
 		for (size_t i = 0; i < N; ++i)
 			pressure[i + 1] = (gamma - 1.0) * density[i] * energy[i];
+	}
+
+	void dp2c(std::vector<double> const& density, std::vector<double> const& pressure, double gamma,
+		std::vector<double>& cs)
+	{
+		size_t N = density.size();
+		cs.resize(N);
+		for (size_t i = 0; i < N; ++i)
+			cs[i] = std::sqrt(gamma * pressure[i + 1] / density[i]);
 	}
 }
 
@@ -121,6 +131,28 @@ void HydroSim::TimeAdvanceViscosity()
 
 	viscosity_ = viscositynew;
 	volume_ = volumesnew;
+
+	++cycle_;
+	time_ += dt;
+}
+
+void HydroSim::TimeAdvanceGodunov()
+{
+	// Calculate the sound speed
+	std::vector<double> cs;
+	dp2c(density_, pressure_, gamma_, cs);
+	// Calcualte the time step
+	double dt = courant_(edges_, pressure_, density_, gamma_);
+	// Solve the reimann problem for the main domain
+	std::vector<double> Pstar, Ustar;
+	hllc_.CalcPstarUstar(density_, pressure_, velocity_, cs, Pstar, Ustar);
+	// Solve the reimann problem for the boundaries
+
+	// Update extensives
+
+	// Move grid
+
+	// Update primitives
 
 	++cycle_;
 	time_ += dt;

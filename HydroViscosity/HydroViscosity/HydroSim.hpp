@@ -1,5 +1,5 @@
 /*! \file HydroSim.hpp
-\brief Class for running a 1D hydro simulation
+\brief Class for running a 1D hydro simulation. For the RM method the mass, pressure, viscosity and internal energy are cell centered while the velocity is edge centered. For the Godunov scheme, all the variables are cell centered.
 \author Elad Steinberg
 */
 #ifndef HYDROSIM_HPP
@@ -42,6 +42,8 @@ public:
 		Boundary const& right);
 	//! \brief Advances the simulation a single time step using artifical viscosity
 	void TimeAdvanceViscosity();
+	//! \brief Advances the simulation a single time step using a godunov scheme
+	void TimeAdvanceGodunov();
 	/*! \brief Outputs the simulation data into ascii files
 	\param prefix The prefix to add to all output files
 	\param suffix The suffix to add to all output files
