@@ -20,6 +20,7 @@ std::vector<T>& operator+=(std::vector<T>& lhs, const std::vector<T>& rhs)
 	if (lhs.size() != rhs.size())
 		throw std::length_error("vectors must be same size to add");
 	size_t N = lhs.size();
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		lhs[i] += rhs[i];
 	return lhs;
@@ -36,6 +37,7 @@ std::vector<T> operator+ (const std::vector<T>& lhs, const std::vector<T>& rhs)
 		throw std::length_error("vectors must be same size to add");
 	size_t N = lhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = lhs[i] + rhs[i];
 	return res;
@@ -50,6 +52,7 @@ std::vector<T> operator+ (T const& s, const std::vector<T>& rhs)
 {
 	size_t N = rhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = s + rhs[i];
 	return res;
@@ -66,6 +69,7 @@ std::vector<T> operator- (const std::vector<T>& lhs, const std::vector<T>& rhs)
 		throw std::length_error("vectors must be same size to add");
 	size_t N = lhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = lhs[i] - rhs[i];
 	return res;
@@ -80,6 +84,7 @@ std::vector<T> operator* (T const& s, const std::vector<T>& rhs)
 {
 	size_t N = rhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = s * rhs[i];
 	return res;
@@ -104,6 +109,7 @@ std::vector<T> operator* (const std::vector<T>& lhs, const std::vector<T>& rhs)
 {
 	size_t N = rhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = lhs[i] * rhs[i];
 	return res;
@@ -120,6 +126,7 @@ std::vector<T> operator/ (const std::vector<T>& lhs, const std::vector<T>& rhs)
 		throw std::length_error("vectors must be same size to add");
 	size_t N = lhs.size();
 	std::vector<T> res(N);
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		res[i] = lhs[i] / rhs[i];
 	return res;

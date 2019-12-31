@@ -9,6 +9,7 @@ namespace
 		size_t N = density.size() - 1;
 		sl.resize(N);
 		sr.resize(N);
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 		{
 			sl[i] = std::min(velocity[i] - cs[i], velocity[i + 1] - cs[i + 1]);
@@ -29,6 +30,7 @@ void Hllc::CalcPstarUstar(std::vector<double> const& density, std::vector<double
 	GetWaveSpeedsVector(density, pressure, velocity, cs, sl, sr, Ustar);
 	Pstar.resize(Ustar.size());
 	size_t N = Pstar.size();
+#pragma ivdep
 	for (size_t i = 0; i < N; ++i)
 		Pstar[i] = pressure[i] + density[i] * (sl[i] - velocity[i]) * (Ustar[i] - velocity[i]);
 }

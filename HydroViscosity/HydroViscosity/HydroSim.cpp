@@ -24,6 +24,7 @@ namespace
 	void CalcDensity(std::vector<double> const& mass, std::vector<double> const& volumes, std::vector<double>& density)
 	{
 		size_t N = density.size();
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 			density[i] = mass[i] / volumes[i];
 	}
@@ -32,6 +33,7 @@ namespace
 		double viscosity_sigma, std::vector<double> &viscosity)
 	{
 		size_t N = density.size();
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 			if (velocity[i + 1] < velocity[i])
 				viscosity[i] = viscosity_sigma * (velocity[i + 1] - velocity[i]) * (velocity[i + 1] - velocity[i]) * density[i];
@@ -42,6 +44,7 @@ namespace
 		std::vector<double> const& mass, double gamma)
 	{
 		size_t N = energy.size();
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 			energy[i] = (energy[i] - 0.5 * (pressure[i] + viscosity[i] + viscositynew[i]) * (volumesnew[i] - volume[i]) / mass[i]) / (1.0 + 0.5 *
 			(gamma - 1.0) * density[i] * (volumesnew[i] - volume[i]) / mass[i]);
@@ -51,6 +54,7 @@ namespace
 		Boundary const& left, Boundary const& right)
 	{
 		size_t N = acc.size() - 1;
+#pragma ivdep
 		for (size_t i = 1; i < N; ++i)
 			acc[i] = -2.0 * (pressure[i] - pressure[i - 1] + viscosity[i] - viscosity[i - 1]) / (mass[i] + mass[i - 1]);
 		// Deal with boundaries
@@ -63,6 +67,7 @@ namespace
 	void de2p(std::vector<double> const& density, std::vector<double> const& energy, double gamma, std::vector<double>& pressure)
 	{
 		size_t N = density.size();
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 			pressure[i] = (gamma - 1.0) * density[i] * energy[i];
 	}
@@ -72,6 +77,7 @@ namespace
 	{
 		size_t N = density.size();
 		cs.resize(N);
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 			cs[i] = std::sqrt(gamma * pressure[i] / density[i]);
 	}
@@ -100,6 +106,7 @@ namespace
 		std::vector<double> const& areas, double pstarl, double pstarr, double ustarl, double ustarr, double dt)
 	{
 		size_t N = momentum.size() - 2;
+#pragma ivdep
 		for (size_t i = 0; i < N; ++i)
 		{
 			momentum[i + 1] -= dt * (pstar[i + 1] * areas[i + 2] - pstar[i] * areas[i + 1]);
@@ -115,6 +122,7 @@ namespace
 	void UpdateMesh(std::vector<double>& edges, std::vector<double> const& ustar, double ul, double ur, double dt)
 	{
 		size_t N = edges.size() - 1;
+#pragma ivdep
 		for (size_t i = 1; i < N; ++i)
 			edges[i] += ustar[i - 1] * dt;
 		edges[0] += ul * dt;
