@@ -133,6 +133,11 @@ HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& 
 	// Allocate the data
 	mass_.resize(N);
 	energy_.resize(N);
+	// Make sure input lengths are ok
+	if (godunov_)
+		assert(density_.size() == N && velocity_.size() == N && pressure_.size() == N);
+	else
+		assert(density_.size() == N && velocity_.size() == (N + 1) && pressure_.size() == N);
 
 	// Set the initial mass and energy
 	for (size_t i = 0; i < N; ++i)
@@ -214,6 +219,14 @@ void HydroSim::TimeAdvanceGodunov()
 
 	++cycle_;
 	time_ += dt;
+}
+
+void HydroSim::TimeAdvance()
+{
+	if (godunov_)
+		TimeAdvanceGodunov();
+	else
+		TimeAdvanceViscosity();
 }
 
 void HydroSim::Output(std::string const& prefix, std::string const& suffix) const

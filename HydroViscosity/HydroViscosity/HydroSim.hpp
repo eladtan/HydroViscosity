@@ -46,6 +46,8 @@ public:
 	void TimeAdvanceViscosity();
 	//! \brief Advances the simulation a single time step using a godunov scheme
 	void TimeAdvanceGodunov();
+	//! \brief Advances the simulation a single time using the scheme set in the constructor
+	void TimeAdvance();
 	/*! \brief Outputs the simulation data into ascii files
 	\param prefix The prefix to add to all output files
 	\param suffix The suffix to add to all output files
