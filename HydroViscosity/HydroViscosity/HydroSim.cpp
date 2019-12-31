@@ -64,6 +64,26 @@ namespace
 		for (size_t i = 0; i < N; ++i)
 			cs[i] = std::sqrt(gamma * pressure[i + 1] / density[i]);
 	}
+
+	double dp2csingle(double density, double pressure, double gamma)
+	{
+		return std::sqrt(gamma * pressure / density);
+	}
+
+	void BoundaryRiemannSolve(Boundary const& boundary_left, Boundary const& boundary_right, std::vector<double> const& density, std::vector<double> const& pressure,
+		std::vector<double> const& velocity, std::vector<double> const& cs, double gamma, Hllc const& hllc, double &pstarl, double &pstarr, double &ustarl, double &ustarr)
+	{
+		double dl = boundary_left.GetSideDensity(true, density);
+		double pl = boundary_left.GetSidePressure(true, pressure);
+		double vl = boundary_left.GetSideVelocity(true, velocity);
+		double csl = dp2csingle(dl, pl, gamma);
+		double dr = boundary_right.GetSideDensity(false, density);
+		double pr = boundary_right.GetSidePressure(false, pressure);
+		double vr = boundary_right.GetSideVelocity(false, velocity);
+		double csr = dp2csingle(dr, pr, gamma);
+		hllc.CalcPstarUstarSingle(dl, pl, vl, csl, density[0], pressure[0], velocity[0], cs[0], ustarl, pstarl);
+		hllc.CalcPstarUstarSingle(density.back(), pressure.back(), velocity.back(), cs.back(), dr, pr, vr, csr, ustarr, pstarr);
+	}
 }
 
 HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& density, std::vector<double> const& pressure, std::vector<double> const& velocity,
