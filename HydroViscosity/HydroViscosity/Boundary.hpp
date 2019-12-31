@@ -30,6 +30,18 @@ public:
 	\return The viscosity outside the computational domain
 	*/
 	virtual double GetSideViscosity(bool left_side, std::vector<double> const& viscosity)const = 0;
+	/*! \brief Calculates the velocity inside the cell to the side of the domain
+	\param left_side Flag for choosing left boundary or right boundary
+	\param velocity The velocity inside the computational domain
+	\return The velocity outside the computational domain
+	*/
+	virtual double GetSideVelocity(bool left_side, std::vector<double> const& velocity)const = 0;
+	/*! \brief Calculates the density inside the cell to the side of the domain
+	\param left_side Flag for choosing left boundary or right boundary
+	\param density The density inside the computational domain
+	\return The density outside the computational domain
+	*/
+	virtual double GetSideDensity(bool left_side, std::vector<double> const& density)const = 0;
 };
 
 /*! \brief Class for rigid wall boundary conditions, the side cell is duplicated and it's velocity changes sign
@@ -42,6 +54,10 @@ public:
 	double GetSideMass(bool left_side, std::vector<double> const& mass)const;
 
 	double GetSideViscosity(bool left_side, std::vector<double> const& viscosity)const;
+
+	double GetSideVelocity(bool left_side, std::vector<double> const& velocity)const;
+	
+	double GetSideDensity(bool left_side, std::vector<double> const& density)const;
 };
 
 #endif // BOUNDARY_HPP
