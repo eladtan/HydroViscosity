@@ -17,7 +17,7 @@ namespace
 	{
 		size_t N = density.size();
 		for (size_t i = 0; i < N; ++i)
-			density[i] = mass[i + 1] / volumes[i];
+			density[i] = mass[i] / volumes[i];
 	}
 
 	void CalcViscosity(std::vector<double> const& velocity, std::vector<double> const& density, Boundary const& left, Boundary const& right,
@@ -26,10 +26,7 @@ namespace
 		size_t N = density.size();
 		for (size_t i = 0; i < N; ++i)
 			if (velocity[i + 1] < velocity[i])
-				viscosity[i + 1] = viscosity_sigma * (velocity[i + 1] - velocity[i]) * (velocity[i + 1] - velocity[i]) * density[i];
-		// Deal with boundaries
-		viscosity[0] = left.GetSideViscosity(true, viscosity);
-		viscosity.back() = right.GetSideViscosity(false, viscosity);
+				viscosity[i] = viscosity_sigma * (velocity[i + 1] - velocity[i]) * (velocity[i + 1] - velocity[i]) * density[i];
 	}
 
 	void UpdateInternalEnergy(std::vector<double> &energy, std::vector<double> const& pressure, std::vector<double> const& viscosity,
@@ -38,22 +35,28 @@ namespace
 	{
 		size_t N = energy.size();
 		for (size_t i = 0; i < N; ++i)
-			energy[i] = (energy[i] - 0.5 * (pressure[i + 1] + viscosity[i + 1] + viscositynew[i + 1]) * (volumesnew[i] - volume[i]) / mass[i + 1]) / (1.0 + 0.5 *
-			(gamma - 1.0) * density[i] * (volumesnew[i] - volume[i]) / mass[i + 1]);
+			energy[i] = (energy[i] - 0.5 * (pressure[i] + viscosity[i] + viscositynew[i]) * (volumesnew[i] - volume[i]) / mass[i]) / (1.0 + 0.5 *
+			(gamma - 1.0) * density[i] * (volumesnew[i] - volume[i]) / mass[i]);
 	}
 
-	void CalcAcceleration(std::vector<double> const& pressure, std::vector<double> const& viscosity, std::vector<double> const& mass, std::vector<double> &acc)
+	void CalcAcceleration(std::vector<double> const& pressure, std::vector<double> const& viscosity, std::vector<double> const& mass, std::vector<double> &acc,
+		Boundary const& left, Boundary const& right)
 	{
-		size_t N = acc.size();
-		for (size_t i = 0; i < N; ++i)
-			acc[i] = -2.0 * (pressure[i + 1] - pressure[i] + viscosity[i + 1] - viscosity[i]) / (mass[i] + mass[i + 1]);
+		size_t N = acc.size() - 1;
+		for (size_t i = 1; i < N; ++i)
+			acc[i] = -2.0 * (pressure[i] - pressure[i - 1] + viscosity[i] - viscosity[i - 1]) / (mass[i] + mass[i - 1]);
+		// Deal with boundaries
+		acc[0] = -2.0 * (pressure[0] - left.GetSidePressure(true, pressure) + viscosity[0] - left.GetSideViscosity(true, viscosity)) / 
+			(mass[0] + left.GetSideMass(true, mass));
+		acc.back() = -2.0 * (right.GetSidePressure(false, pressure) + right.GetSideViscosity(false, viscosity) - pressure.back() - viscosity.back()) / 
+			(mass.back() + right.GetSideMass(false, mass));
 	}
 
 	void de2p(std::vector<double> const& density, std::vector<double> const& energy, double gamma, std::vector<double>& pressure)
 	{
 		size_t N = density.size();
 		for (size_t i = 0; i < N; ++i)
-			pressure[i + 1] = (gamma - 1.0) * density[i] * energy[i];
+			pressure[i] = (gamma - 1.0) * density[i] * energy[i];
 	}
 
 	void dp2c(std::vector<double> const& density, std::vector<double> const& pressure, double gamma,
@@ -88,31 +91,24 @@ namespace
 
 HydroSim::HydroSim(std::vector<double> const& edges, std::vector<double> const& density, std::vector<double> const& pressure, std::vector<double> const& velocity,
 	Courant const& courant, double gamma, Geometry const& geo,Boundary const& left,
-	Boundary const& right) : edges_(edges), density_(density), velocity_(velocity), pressure_(pressure), courant_(courant), gamma_(gamma),
-	geo_(geo), boundary_left_(left), boundary_right_(right), time_(0.0), cycle_(0), viscosity_sigma_(2.0), mass_(std::vector<double>()), 
+	Boundary const& right, bool godunov) : edges_(edges), density_(density), velocity_(velocity), pressure_(pressure), courant_(courant), gamma_(gamma),
+	geo_(geo), boundary_left_(left), boundary_right_(right), godunov_(godunov), time_(0.0), cycle_(0), viscosity_sigma_(2.0), mass_(std::vector<double>()), 
 	viscosity_(std::vector<double>()), volume_(std::vector<double>()), energy_(std::vector<double>())
 {
 	assert(edges_.size() > 1);
 	size_t N = edges_.size() - 1;
 	// Allocate the data
-	mass_.resize(N + 2);
+	mass_.resize(N);
 	energy_.resize(N);
 
 	// Set the initial mass and energy
 	for (size_t i = 0; i < N; ++i)
 	{
-		mass_[i + 1] = geo_.CalcVolume(edges_, i) * density[i];
+		mass_[i] = geo_.CalcVolume(edges_, i) * density[i];
 		energy_[i] = pressure_[i] / ((gamma_ - 1.0) * density[i]);
 	}
-	mass_[0] = boundary_left_.GetSideMass(true, mass_);
-	mass_.back() = boundary_right_.GetSideMass(false, mass_);
-
-	// Increase size of pressure vector to include ghost cells
-	pressure_.insert(pressure_.begin(), boundary_left_.GetSidePressure(true, pressure_));
-	pressure_.push_back(boundary_right_.GetSidePressure(false, pressure_));
-
 	// Calc artificial viscosity
-	viscosity_.resize(N + 2);
+	viscosity_.resize(N);
 	CalcViscosity(velocity_, density_, boundary_left_, boundary_right_, viscosity_sigma_, viscosity_);
 		
 	// Calculate initial acceleration
@@ -142,10 +138,8 @@ void HydroSim::TimeAdvanceViscosity()
 	UpdateInternalEnergy(energy_, pressure_, viscosity_, viscositynew, volumesnew, volume_, density_, mass_, gamma_);
 	// Update the pressure
 	de2p(density_, energy_, gamma_, pressure_);
-	pressure_[0] = boundary_left_.GetSidePressure(true, pressure_);
-	pressure_.back() = boundary_right_.GetSidePressure(false, pressure_);
 	// Calculate the acceleration
-	CalcAcceleration(pressure_, viscositynew, mass_, acc_);
+	CalcAcceleration(pressure_, viscositynew, mass_, acc_, boundary_left_, boundary_right_);
 	// Kick interfaces again
 	velocity_ += (0.5 * dt) * acc_;
 

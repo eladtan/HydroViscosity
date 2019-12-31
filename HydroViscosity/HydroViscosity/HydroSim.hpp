@@ -20,6 +20,7 @@ private:
 	Geometry const& geo_;
 	Boundary const& boundary_left_; 
 	Boundary const& boundary_right_;
+	bool godunov_;
 	double time_;
 	size_t cycle_;
 	const double viscosity_sigma_;
@@ -30,16 +31,17 @@ public:
 	\param edges The initial location of the interfaces
 	\param density The initial values of the density inside the cells
 	\param pressure The initial values of the pressure inside the cells
-	\param velocity The initial values of the velocity of the interfaces
+	\param velocity The initial values of the velocity of the interfaces/cells, depends on run type
 	\param courant The class that calculates the time step size
 	\param gamma The adiabatic index (assumes ideal gas law)
 	\param geo The geometry of the problem
 	\param left The left side boundary condition
 	\param right The right side boundary condition
+	\param godunov Flag if run should use artificial viscosity or Godunov scheme
 	*/
 	HydroSim(std::vector<double> const& edges, std::vector<double> const& density, std::vector<double> const& pressure, std::vector<double> const& velocity, 
 		Courant const& courant, double gamma, Geometry const& geo, Boundary const& left,
-		Boundary const& right);
+		Boundary const& right, bool godunov = false);
 	//! \brief Advances the simulation a single time step using artifical viscosity
 	void TimeAdvanceViscosity();
 	//! \brief Advances the simulation a single time step using a godunov scheme
