@@ -25,6 +25,7 @@ void Hllc::CalcPstarUstar(std::vector<double> const& density, std::vector<double
 	std::vector<double> const& cs, std::vector<double>& Pstar, std::vector<double>& Ustar)const
 {
 	std::vector<double> sl, sr;
+	Ustar.resize(density.size() - 1);
 	GetWaveSpeedsVector(density, pressure, velocity, cs, sl, sr, Ustar);
 	Pstar.resize(Ustar.size());
 	size_t N = Pstar.size();
